@@ -13,6 +13,8 @@ class BaseDeliveryBackend(object):
     """
     Base backend for all other backends
     """
+    supports_anonymous_users = False
+
     def __init__(self, notice):
         self.notice = notice
 
@@ -35,18 +37,25 @@ class BaseDeliveryBackend(object):
         current_language = get_language()
 
         for user in self.notice.to_users:
+            if not self.supports_anonymous_users and user.is_anonymous():
+                continue
+            elif user.is_anonymous():
+                languages = [language_code for language_code, language in settings.LANGUAGES]
+                user = None
+            else:
+                languages = [get_language_for_user(user)]
             if not (self.notice.can_send(user, self) and self.can_send(user, self.notice)):
                 continue
-            language = get_language_for_user(user)
-            activate(language)
-            # build the context
-            context = self.default_context()
-            context.update(self.notice.get_context(language=language))
-            context.update(self.notice.get_user_context(user))
-            self.deliver_to(user=user,
-                            context=context,
-                            notice=self.notice,
-                            language=language)
+            for language in languages:
+                activate(language)
+                # build the context
+                context = self.default_context()
+                context.update(self.notice.get_context(language=language))
+                context.update(self.notice.get_user_context(user))
+                self.deliver_to(user=user,
+                                context=context,
+                                notice=self.notice,
+                                language=language)
         activate(current_language)
 
 
