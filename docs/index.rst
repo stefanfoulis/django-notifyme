@@ -6,6 +6,8 @@
 Welcome to django-notifyme's documentation!
 ===========================================
 
+.. warning:: This is ALPHA code. API's may change at any time.
+
 A framework for django projects and re-usable apps that aims to provide a clean and flexible
 notification solution. Developers can emit user-centric notifications to their users without
 knowing the details of how the notification will be delivered by the delivery backends.
