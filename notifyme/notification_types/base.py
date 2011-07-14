@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-class BaseNoticeType(object):
+class BaseNotificationType(object):
     def __init__(self, to_users, context, **options):
         self.to_users = to_users
         self.context = context

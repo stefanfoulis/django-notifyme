@@ -4,4 +4,4 @@ class DeliveryBackendRegistry(dict):
     def register(self, backend):
         self[backend.identifier] = backend
 
-backends = DeliveryBackendRegistry()
+registry = DeliveryBackendRegistry()

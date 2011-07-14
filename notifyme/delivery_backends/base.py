@@ -11,14 +11,14 @@ def get_language_for_user(user):
 
 class BaseDeliveryBackend(object):
     """
-    Base backend for all other backends
+    Base backend for all DeliveryBackends
     """
     supports_anonymous_users = False
 
-    def __init__(self, notice):
-        self.notice = notice
+    def __init__(self, notification):
+        self.notification = notification
 
-    def can_send(self, user, notice_type):
+    def can_send(self, user, notification):
         """
         Determines if this backend should send a notification for the given combination of user and notice_type
         """
@@ -31,7 +31,7 @@ class BaseDeliveryBackend(object):
         return Context({
             'default_http_protocol': getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http"),
             'site': self.get_site(),
-            'notice': self.notice,
+            'notification': self.notification,
         })
 
     def deliver(self):
@@ -40,7 +40,7 @@ class BaseDeliveryBackend(object):
         """
         current_language = get_language()
 
-        for user in self.notice.to_users:
+        for user in self.notification.to_users:
             if not self.supports_anonymous_users and user.is_anonymous():
                 continue
             elif user.is_anonymous():
@@ -48,22 +48,22 @@ class BaseDeliveryBackend(object):
                 user = None
             else:
                 languages = [get_language_for_user(user)]
-            if not (self.notice.can_send(user, self) and self.can_send(user, self.notice)):
+            if not (self.notification.can_send(user, self) and self.can_send(user, self.notification)):
                 continue
             for language in languages:
                 activate(language)
                 # build the context
                 context = self.default_context()
-                context.update(self.notice.get_context(language=language))
-                context.update(self.notice.get_user_context(user))
+                context.update(self.notification.get_context(language=language))
+                context.update(self.notification.get_user_context(user))
                 self.deliver_to(user=user,
                                 context=context,
-                                notice=self.notice,
+                                notification=self.notification,
                                 language=language)
         activate(current_language)
 
 
-    def deliver_to(self, user, context, language):
+    def deliver_to(self, user, context, notification, language):
         """
         handle delivery to a specific user. In this method the correct language of the user is already set and
         the context has been modified accordingly for this user.

@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from notifyme import notice
+from notifyme import notification_types
 from celery.task import task
 
 @task

@@ -6,17 +6,17 @@ notification types
 Notification types are app specific. Custom apps define custom NoticeTypes.
 In the simplest case, all you need is a ``identifier`` for your custom NoticeType::
 
-    from notifyme.notice.base import BaseNoticeType
+    from notifyme.notice.base import BaseNotificationType
 
     class PrinterOnFireNotification(BaseNotificationType):
         identifier = 'printer_on_fire'
 
 But you can do so much more. Here is a more complete example::
 
-    from notifyme.notice.base import BaseNoticeType
+    from notifyme.notice.base import BaseNotificationType
     import datetime
 
-    class PrinterOnFireNotification(BaseNoticeType):
+    class PrinterOnFireNotification(BaseNotificationType):
         identifier = 'printer_on_fire'
 
         def can_send(self, user, backend):
