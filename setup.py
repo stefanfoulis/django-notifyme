@@ -11,20 +11,22 @@ install_requires = [
 ]
 
 setup(
-    name = "django-notifyme",
-    version = version,
-    url = 'http://github.com/stefanfoulis/django-notifyme',
-    license = 'BSD',
+    name="django-notifyme",
+    version=version,
+    url='http://github.com/stefanfoulis/django-notifyme',
+    license='BSD',
     platforms=['OS Independent'],
-    description = "A notification framework for django",
-    long_description = read('README.rst'),
-    author = 'Stefan Foulis',
-    author_email = 'stefan.foulis@gmail.com',
+    description="A notification framework for django",
+    long_description=read('README.rst'),
+    author='Stefan Foulis',
+    author_email='stefan.foulis@gmail.com',
+    maintainer='Stefan Foulis',
+    maintainer_email='stefan.foulis@gmail.com',
     packages=find_packages(),
-    install_requires = install_requires,
+    install_requires=install_requires,
     include_package_data=True,
     zip_safe=False,
-    classifiers = [
+    classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
         'Intended Audience :: Developers',
