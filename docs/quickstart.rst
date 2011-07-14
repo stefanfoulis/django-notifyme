@@ -10,34 +10,36 @@ Install the packages::
     pip install django-notifyme-by-email
     pip install django-notifyme-onsite
 
-Now add ``notifyme``, ``notifyme_by_email`` and ``notifyme_onsite`` to ``INSTALLED_APPS``.
+Now add ``notifyme`` and ``notifyme_onsite`` to ``INSTALLED_APPS``.
 
 The delivery backends must be registered somewhere on project startup. It is recommended to place this in ``models.py``
 of one of the projects apps. E.g the projects `core` app.::
 
-    import notifyme.delivery
-    from notifyme_by_email.delivery import EmailBackend
-    notifyme.delivery.backends.register(EmailBackend)
+    import notifyme.delivery_backends
+    from notifyme_by_email.delivery_backends import EmailBackend
+    notifyme.delivery_backends.registry.register(EmailBackend)
 
-    from notifyme_onsite.delivery import OnsiteStickyBackend
-    notifyme.delivery.backends.register(OnsiteStickyBackend)
+    from notifyme_onsite.delivery_backends import OnsiteStickyBackend
+    notifyme.delivery_backends.registry.register(OnsiteStickyBackend)
 
 The ``notifyme_onsite`` delivery backends has some tables and urls of its own, so you'll need to run ``syncdb`` and add
 something like ``url(r'^notifyme/', include('notifyme_onsite.urls'))`` to your url patterns.
 
+Now we a ready to deliver Notifications, but we still need something to deliver. This is where NotificationTypes come
+in.
+Like delivery backends, notification types need to be registered as well. They are the app specific Notifications that
+can be emitted. In this example we will use the bundled ``PrinterOnFireNotification``.
+This code should also be placed inside a ``models.py``::
 
-Notice types need to be registered as well. These are the app specific Notifications that can be emitted. In this
-example we will use the bundled ``PrinterOnFireNotification``. This code should also be placed inside a ``models.py``::
 
-
-    import notifyme.notice
-    from notifyme.notice.printer_on_fire import PrinterOnFireNotification
-    notifyme.notice.types.register(PrinterOnFireNotification)
+    import notifyme.notification_types
+    from notifyme.notification_types.printer_on_fire import PrinterOnFireNotification
+    notifyme.notification_types.registry.register(PrinterOnFireNotification)
 
 
 See :ref:`notification_types` for information on how to create your own.
 
-Now notices can be emitted using the following api::
+Now notifications can be emitted using the following api::
 
     import notifyme.api
     notifyme.api.send([user1, user2, AnonymousUser()], 'printer_on_fire',
@@ -52,4 +54,4 @@ The ``is_sticky`` and ``expires_at`` options exist as a convention and are not m
 * ``expires_at``: the date and time at which this message is no longer useful. Depending on the backend the notice may
   be hidden or removed after that that.
 
-
+If you create a delivery backend where these variable names make sense, please re-user them.

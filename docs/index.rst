@@ -14,14 +14,14 @@ knowing the details of how the notification will be delivered by the delivery ba
 
 Delivery backends could emit notices as:
 
-* on site messages
-* emails
-* twitter messages
-* notifio messages
+* on site messages (`django-notifyme-onsite`_)
+* emails (`django-notifyme-by-email`_)
+* tweets
+* notifo messages
 * jabber
 * whatever you can dream of
 
-django-notifyme is *NOT* a replacement for request-by-request messages like
+``django-notifyme`` is **NOT** a replacement for request-by-request messages like
 ``django.contrib.messages`` provides.
 
 
@@ -32,15 +32,9 @@ Contents:
    :maxdepth: 2
 
    quickstart
-   official_delivery_backends
    notification_types
    delivery_backends
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+.. _django-notifyme-onsite: https://github.com/stefanfoulis/django-notifyme-onsite
+.. _django-notifyme-by-email: https://github.com/stefanfoulis/django-notifyme-by-email

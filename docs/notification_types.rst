@@ -3,17 +3,17 @@
 notification types
 ==================
 
-Notification types are app specific. Custom apps define custom NoticeTypes.
-In the simplest case, all you need is a ``identifier`` for your custom NoticeType::
+Notification types are app specific. Custom apps define custom NotificationTypes.
+In the simplest case, all you need is a ``identifier`` for your custom NotificationType::
 
-    from notifyme.notice.base import BaseNotificationType
+    from notifyme.notification_types.base import BaseNotificationType
 
     class PrinterOnFireNotification(BaseNotificationType):
         identifier = 'printer_on_fire'
 
 But you can do so much more. Here is a more complete example::
 
-    from notifyme.notice.base import BaseNotificationType
+    from notifyme.notification_types.base import BaseNotificationType
     import datetime
 
     class PrinterOnFireNotification(BaseNotificationType):
@@ -31,7 +31,7 @@ But you can do so much more. Here is a more complete example::
             """
             perform any context altering actions before the notification is rendered. At this point the active language
             will be set correctly for the user. This is where language specific stuff for the context can be changed.
-            This context is shared for all users receiving the notice.
+            This context is shared for all users receiving the notification.
             """
             context = super(PrinterOnFireNotification, self).get_context(language=language)
             if language=='de':

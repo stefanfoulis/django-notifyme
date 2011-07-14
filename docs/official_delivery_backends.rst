@@ -1,5 +1,0 @@
-official delivery backends
-==========================
-
-
-
