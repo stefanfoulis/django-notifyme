@@ -1,4 +1,4 @@
 include LICENSE
 include README.rst
-include HISTORY
+include HISTORY.rst
 recursive-include notifyme/templates *
