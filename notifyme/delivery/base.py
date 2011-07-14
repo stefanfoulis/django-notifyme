@@ -24,10 +24,14 @@ class BaseDeliveryBackend(object):
         """
         return True
 
+    def get_site(self):
+        return Site.objects.get_current()
+
     def default_context(self):
         return Context({
             'default_http_protocol': getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http"),
-            'current_site': Site.objects.get_current(),
+            'site': self.get_site(),
+            'notice': self.notice,
         })
 
     def deliver(self):
