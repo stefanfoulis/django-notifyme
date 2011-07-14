@@ -1,0 +1,4 @@
+{{ notice.identifier }}
+
+printer: {{ printer }}
+flames: {{ flames }}
