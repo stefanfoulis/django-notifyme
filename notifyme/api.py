@@ -1,5 +1,9 @@
 #-*- coding: utf-8 -*-
 from notifyme import delivery_backends, notification_types
+from notifyme.settings import USE_CELERY
+
+if USE_CELERY:
+    from notifyme.tasks import send_notice
 
 def send(to_users, notification_type, context=None, **options):
     # get the Notification Class for notice_type
@@ -7,7 +11,10 @@ def send(to_users, notification_type, context=None, **options):
     # create an instance of the NoticeClass
     notification = NotificationType(to_users=to_users, context=context, **options)
     # depending on settings either add the notification to celery or whatever
-    send_now(notification)
+    if USE_CELERY:
+        send_notice.delay()
+    else:
+        send_now(notification)
 
 def send_now(notice):
     for backend in delivery_backends.registry.values():
