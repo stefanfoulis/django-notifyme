@@ -55,3 +55,10 @@ The ``is_sticky`` and ``expires_at`` options exist as a convention and are not m
   be hidden or removed after that that.
 
 If you create a delivery backend where these variable names make sense, please re-user them.
+
+
+celery
+------
+
+Set ``NOTIFYME_USE_CELERY=True`` in settings to make ``django-notifyme`` use celery to deliver notifications over
+a async queue.
